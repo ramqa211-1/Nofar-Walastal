@@ -47,40 +47,43 @@ function Index() {
       </nav>
 
       <main className="pt-28 md:pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-        {/* Right (visual: first in DOM for RTL flow with sticky on side) */}
+        {/* Portrait — hero side, not sticky */}
         <aside className="lg:col-span-5 order-first lg:order-last">
-          <div className="lg:sticky lg:top-32">
-            <figure className="w-full aspect-[3/4] overflow-hidden bg-stone-200 outline outline-1 -outline-offset-1 outline-black/5 animate-reveal">
+          <figure className="relative w-full max-w-sm mx-auto lg:max-w-none animate-reveal">
+            {/* Decorative accent frame */}
+            <div className="absolute -inset-3 border border-accent/30 pointer-events-none -z-10" aria-hidden />
+            <div className="w-full aspect-[3/4] overflow-hidden bg-stone-200 outline outline-1 -outline-offset-1 outline-black/5">
               <img
                 src={portraitAsset.url}
                 alt="נופר לוי ולסטל — רואת חשבון"
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                className="w-full h-full object-cover"
                 loading="eager"
               />
-            </figure>
-            <dl className="mt-8 space-y-3 font-mono text-[11px] uppercase tracking-tighter text-muted">
-              <div className="flex justify-between border-b border-border pb-2">
-                <dt>Role</dt>
-                <dd className="text-foreground">CPA / רואת חשבון</dd>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <dt>Education</dt>
-                <dd className="text-foreground">Kol Hamas — 95</dd>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <dt>Experience</dt>
-                <dd className="text-foreground">15+ Years Mgmt</dd>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <dt>Location</dt>
-                <dd className="text-foreground">Hadera, IL</dd>
-              </div>
-            </dl>
-          </div>
+            </div>
+            <figcaption className="mt-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+              <span>Nofar Levi Walastal</span>
+              <span className="text-accent">CPA · ISR</span>
+            </figcaption>
+          </figure>
+          <dl className="mt-10 max-w-sm mx-auto lg:max-w-none space-y-3 font-mono text-[11px] uppercase tracking-tighter text-muted">
+            <div className="flex justify-between border-b border-border pb-2">
+              <dt>Role</dt>
+              <dd className="text-foreground">CPA / רואת חשבון</dd>
+            </div>
+            <div className="flex justify-between border-b border-border pb-2">
+              <dt>Education</dt>
+              <dd className="text-foreground">Kol Hamas — 95</dd>
+            </div>
+            <div className="flex justify-between border-b border-border pb-2">
+              <dt>Experience</dt>
+              <dd className="text-foreground">15+ Years Mgmt</dd>
+            </div>
+          </dl>
         </aside>
 
         {/* Left content */}
         <div className="lg:col-span-7 space-y-28 md:space-y-32">
+
           {/* Hero */}
           <section className="animate-reveal">
             <div className="mb-6 flex items-center gap-4 text-accent">
@@ -243,7 +246,7 @@ function Index() {
               >
                 nofarlevi1988@gmail.com
               </a>
-              <span className="opacity-50 text-sm pt-2">שניר 10, חדרה</span>
+              
             </div>
           </div>
           <div className="flex flex-col items-start md:items-end gap-6 text-xs font-mono uppercase tracking-[0.2em] opacity-50">
