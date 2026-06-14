@@ -246,7 +246,7 @@ function Index() {
               >
                 nofarlevi1988@gmail.com
               </a>
-              <span className="opacity-50 text-sm pt-2">שניר 10, חדרה</span>
+              
             </div>
           </div>
           <div className="flex flex-col items-start md:items-end gap-6 text-xs font-mono uppercase tracking-[0.2em] opacity-50">
