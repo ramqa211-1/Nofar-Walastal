@@ -461,53 +461,150 @@ function Index() {
             }}
           />
 
-          {/* Layer 2: portrait */}
+          {/* Layer 2: portrait + text side by side */}
           <div
             style={{
               position: "absolute", inset: 0,
               display: "flex", alignItems: "center", justifyContent: "center",
+              padding: "80px clamp(24px, 5vw, 64px) 40px",
             }}
           >
-            <div style={{ position: "relative", flexShrink: 0 }}>
-              {/* Offset accent frame */}
-              <div
-                style={{
-                  position: "absolute", inset: -13,
-                  border: "1px solid hsl(28 44% 35% / 0.38)",
-                  pointerEvents: "none", zIndex: -1,
-                  boxShadow:
-                    "0 0 60px hsl(28 50% 30% / 0.12), 0 0 120px hsl(28 40% 22% / 0.08)",
-                }}
-              />
-              {/* Portrait frame */}
-              <div
-                style={{
-                  width: "clamp(260px, 40vw, 440px)", aspectRatio: "3/4",
-                  outline: "1px solid hsl(36 18% 22%)", outlineOffset: -1,
-                  overflow: "hidden", background: "hsl(24 15% 11%)",
-                }}
-              >
-                <img
-                  src={portraitUrl}
-                  alt="נופר לוי ולסטל"
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: "clamp(28px, 5vw, 72px)",
+                maxWidth: 1100,
+                width: "100%",
+              }}
+            >
+              {/* Portrait */}
+              <div style={{ flexShrink: 0 }}>
+                <div style={{ position: "relative" }}>
+                  <div
+                    style={{
+                      position: "absolute", inset: -13,
+                      border: "1px solid hsl(28 44% 35% / 0.38)",
+                      pointerEvents: "none", zIndex: -1,
+                      boxShadow: "0 0 60px hsl(28 50% 30% / 0.12), 0 0 120px hsl(28 40% 22% / 0.08)",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: "clamp(200px, 26vw, 340px)",
+                      aspectRatio: "3/4",
+                      maxHeight: "calc(100vh - 160px)",
+                      outline: "1px solid hsl(36 18% 22%)", outlineOffset: -1,
+                      overflow: "hidden", background: "hsl(24 15% 11%)",
+                    }}
+                  >
+                    <img
+                      src={portraitUrl}
+                      alt="נופר לוי ולסטל"
+                      style={{
+                        width: "100%", height: "100%",
+                        objectFit: "cover", objectPosition: "center top",
+                      }}
+                      loading="eager"
+                    />
+                  </div>
+                </div>
+                <div
                   style={{
-                    width: "100%", height: "100%",
-                    objectFit: "cover", objectPosition: "center 35%",
+                    display: "flex", justifyContent: "space-between",
+                    marginTop: 13, fontFamily: "var(--font-mono)",
+                    fontSize: 10, textTransform: "uppercase",
+                    letterSpacing: "0.17em", color: "hsl(35 12% 52%)",
+                    width: "clamp(200px, 26vw, 340px)",
                   }}
-                  loading="eager"
-                />
+                >
+                  <span>Nofar Levi Walastal</span>
+                  <span style={{ color: "hsl(28 45% 36%)" }}>CPA · ISR</span>
+                </div>
               </div>
-              {/* Caption */}
+
+              {/* Text */}
               <div
+                ref={textRef}
                 style={{
-                  display: "flex", justifyContent: "space-between",
-                  marginTop: 13, fontFamily: "var(--font-mono)",
-                  fontSize: 10, textTransform: "uppercase",
-                  letterSpacing: "0.17em", color: "hsl(35 12% 52%)",
+                  flex: 1,
+                  display: "flex", flexDirection: "column", alignItems: "flex-start",
+                  willChange: "transform, opacity",
                 }}
               >
-                <span>Nofar Levi Walastal</span>
-                <span style={{ color: "hsl(28 45% 36%)" }}>CPA · ISR</span>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)", fontSize: 11,
+                    textTransform: "uppercase", letterSpacing: "0.24em",
+                    color: "hsl(28 45% 36%)", marginBottom: 18,
+                    display: "flex", alignItems: "center", gap: 14,
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "inline-block", width: 36, height: 1,
+                      background: "hsl(28 45% 36%)", flexShrink: 0,
+                    }}
+                  />
+                  Nofar Levi Walastal
+                </div>
+
+                <h1
+                  style={{
+                    fontFamily: "var(--font-display)", fontWeight: 800,
+                    fontSize: "clamp(44px, 6.5vw, 84px)", lineHeight: 0.93,
+                    letterSpacing: "-0.025em", color: "hsl(38 22% 87%)",
+                    marginBottom: 14,
+                    textShadow: "0 2px 48px hsl(24 22% 5% / 0.85)",
+                  }}
+                >
+                  {isHe ? (
+                    <>חשבת<br />שכר.</>
+                  ) : (
+                    <>Payroll<br />Accountant.</>
+                  )}
+                </h1>
+
+                <p
+                  style={{
+                    fontFamily: "var(--font-display)", fontWeight: 500,
+                    fontSize: "clamp(18px, 2.2vw, 26px)",
+                    color: "hsl(28 28% 48%)", marginBottom: 28,
+                  }}
+                >
+                  {isHe ? "עם חזון ניהולי." : "With managerial vision."}
+                </p>
+
+                <div style={{ display: "flex", alignItems: "baseline", gap: 36 }}>
+                  {[
+                    { num: "96",  cap: isHe ? 'ציון מועצת רוה"ח' : "CPA Council Score" },
+                    { num: "15+", cap: isHe ? "שנות ניסיון"      : "Years Experience" },
+                  ].map(({ num, cap }) => (
+                    <div key={num}>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-display)", fontWeight: 800,
+                          fontSize: "clamp(32px, 3.5vw, 44px)", lineHeight: 1,
+                          color: "hsl(28 60% 50%)",
+                          textShadow: "0 0 28px hsl(28 60% 44% / 0.42)",
+                          display: "block",
+                        }}
+                      >
+                        {num}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)", fontSize: 9,
+                          textTransform: "uppercase", letterSpacing: "0.14em",
+                          color: "hsl(35 12% 52%)", display: "block", marginTop: 4,
+                        }}
+                      >
+                        {cap}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -550,95 +647,6 @@ function Index() {
             ))}
           </div>
 
-          {/* Layer 4: lower-third cinematic text */}
-          <div
-            ref={textRef}
-            style={{
-              position: "absolute", right: 0, left: 0, bottom: 0,
-              padding: "100px clamp(24px, 5vw, 64px) 52px",
-              background:
-                "linear-gradient(to top, hsl(24 18% 5% / 0.88) 0%, hsl(24 18% 5% / 0.38) 55%, transparent 100%)",
-              display: "flex", flexDirection: "column", alignItems: "flex-start",
-              willChange: "transform, opacity",
-            }}
-          >
-            {/* Eyebrow */}
-            <div
-              style={{
-                fontFamily: "var(--font-mono)", fontSize: 11,
-                textTransform: "uppercase", letterSpacing: "0.24em",
-                color: "hsl(28 45% 36%)", marginBottom: 18,
-                display: "flex", alignItems: "center", gap: 14,
-              }}
-            >
-              <span
-                style={{
-                  display: "inline-block", width: 36, height: 1,
-                  background: "hsl(28 45% 36%)", flexShrink: 0,
-                }}
-              />
-              Nofar Levi Walastal
-            </div>
-
-            {/* Headline */}
-            <h1
-              style={{
-                fontFamily: "var(--font-display)", fontWeight: 800,
-                fontSize: "clamp(44px, 6.5vw, 84px)", lineHeight: 0.93,
-                letterSpacing: "-0.025em", color: "hsl(38 22% 87%)",
-                marginBottom: 14,
-                textShadow: "0 2px 48px hsl(24 22% 5% / 0.85)",
-              }}
-            >
-              {isHe ? (
-                <>חשבת<br />שכר.</>
-              ) : (
-                <>Payroll<br />Accountant.</>
-              )}
-            </h1>
-
-            {/* Sub */}
-            <p
-              style={{
-                fontFamily: "var(--font-display)", fontWeight: 500,
-                fontSize: "clamp(18px, 2.2vw, 26px)",
-                color: "hsl(28 28% 48%)", marginBottom: 28,
-              }}
-            >
-              {isHe ? "עם חזון ניהולי." : "With managerial vision."}
-            </p>
-
-            {/* Stats */}
-            <div style={{ display: "flex", alignItems: "baseline", gap: 36 }}>
-              {[
-                { num: "96",  cap: isHe ? 'ציון מועצת רוה"ח' : "CPA Council Score" },
-                { num: "15+", cap: isHe ? "שנות ניסיון"      : "Years Experience" },
-              ].map(({ num, cap }) => (
-                <div key={num}>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-display)", fontWeight: 800,
-                      fontSize: "clamp(32px, 3.5vw, 44px)", lineHeight: 1,
-                      color: "hsl(28 60% 50%)",
-                      textShadow: "0 0 28px hsl(28 60% 44% / 0.42)",
-                      display: "block",
-                    }}
-                  >
-                    {num}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-mono)", fontSize: 9,
-                      textTransform: "uppercase", letterSpacing: "0.14em",
-                      color: "hsl(35 12% 52%)", display: "block", marginTop: 4,
-                    }}
-                  >
-                    {cap}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
 
         </div>
       </div>
