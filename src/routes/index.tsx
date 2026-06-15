@@ -492,7 +492,7 @@ function Index() {
                   alt="נופר לוי ולסטל"
                   style={{
                     width: "100%", height: "100%",
-                    objectFit: "cover", objectPosition: "center 18%",
+                    objectFit: "cover", objectPosition: "center 35%",
                   }}
                   loading="eager"
                 />
