@@ -4,12 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
-
-import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
   return (
@@ -69,57 +64,16 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "נופר לוי ולסטל — חשבת שכר" },
-      { name: "description", content: "כרטיס ביקור דיגיטלי של נופר לוי ולסטל, חשבת שכר. ציון 96 בקורס קול המס, מכללת \"כל המס\", ו-15 שנות ניסיון ניהולי בסונול." },
-      { name: "author", content: "Nofar Levi Walastal" },
-      { property: "og:title", content: "נופר לוי ולסטל — חשבת שכר" },
-      { property: "og:description", content: "כרטיס ביקור דיגיטלי של נופר לוי ולסטל, חשבת שכר. ציון 96 בקורס קול המס, מכללת \"כל המס\", ו-15 שנות ניסיון ניהולי בסונול." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "נופר לוי ולסטל — חשבת שכר" },
-      { name: "twitter:description", content: "כרטיס ביקור דיגיטלי של נופר לוי ולסטל, חשבת שכר. ציון 96 בקורס קול המס, מכללת \"כל המס\", ו-15 שנות ניסיון ניהולי בסונול." },
-    ],
-    links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@500;700;800&family=JetBrains+Mono:wght@400;500&display=swap",
-      },
-      { rel: "stylesheet", href: appCss },
-    ],
-  }),
-
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );

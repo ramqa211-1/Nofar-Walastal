@@ -3,22 +3,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import portraitUrl from "../../images/nofar.png";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "נופר לוי ולסטל — חשבת שכר" },
-      {
-        name: "description",
-        content:
-          "כרטיס ביקור דיגיטלי של נופר לוי ולסטל, חשבת שכר. ציון 96 בבחינת מועצת רואי החשבון, ו-15 שנות ניסיון ניהולי בסונול.",
-      },
-      { property: "og:title", content: "נופר לוי ולסטל — חשבת שכר" },
-      {
-        property: "og:description",
-        content: "מצוינות אקדמית לצד 15 שנות ניהול תפעולי בשטח.",
-      },
-      { property: "og:image", content: portraitUrl },
-    ],
-  }),
   component: Index,
 });
 
