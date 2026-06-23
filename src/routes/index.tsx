@@ -85,6 +85,9 @@ function useHeroParallax(
   textRef: React.RefObject<HTMLDivElement | null>
 ) {
   useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     let ticking = false;
     const update = () => {
       const space = spaceRef.current;
@@ -93,11 +96,25 @@ function useHeroParallax(
       const text = textRef.current;
       if (!space || !bg || !symbols || !text) { ticking = false; return; }
       const maxScroll = space.offsetHeight - window.innerHeight;
+      // No scroll travel (e.g. mobile single-viewport hero) or reduced motion:
+      // keep everything at rest so the text never fades on scroll.
+      if (maxScroll <= 0 || reduceMotion) {
+        bg.style.transform = "scale(1)";
+        bg.style.filter = "blur(0px)";
+        symbols.style.transform = "translateY(0px)";
+        text.style.opacity = "1";
+        text.style.transform = "translateY(0px)";
+        ticking = false;
+        return;
+      }
       const p = Math.max(0, Math.min(window.scrollY / maxScroll, 1));
       bg.style.transform = `scale(${1 + p * 0.3})`;
       bg.style.filter = `blur(${p * 1.8}px)`;
       symbols.style.transform = `translateY(${-p * 44}px)`;
-      text.style.opacity = `${Math.max(0, 1 - p * 2)}`;
+      // Fade only across the last 40% of the pinned travel, so the hero text
+      // stays fully readable until you are clearly leaving the section.
+      const fade = Math.max(0, (p - 0.6) / 0.4);
+      text.style.opacity = `${1 - fade}`;
       text.style.transform = `translateY(${p * 18}px)`;
       ticking = false;
     };
@@ -105,7 +122,12 @@ function useHeroParallax(
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 }
 
@@ -443,7 +465,7 @@ function Index() {
       )}
 
       {/* ══ HERO ═════════════════════════════════════════════ */}
-      <div ref={spaceRef} style={{ height: "100vh", position: "relative" }}>
+      <div ref={spaceRef} style={{ height: "var(--hero-space-h)", position: "relative" }}>
         <div
           style={{
             position: "sticky", top: 0, height: "100vh",
@@ -492,7 +514,7 @@ function Index() {
                   />
                   <div
                     style={{
-                      width: "clamp(200px, 26vw, 340px)",
+                      width: "var(--hero-portrait-w)",
                       aspectRatio: "3/4",
                       maxHeight: "calc(100vh - 160px)",
                       outline: "1px solid hsl(36 18% 22%)", outlineOffset: -1,
@@ -516,7 +538,7 @@ function Index() {
                     marginTop: 13, fontFamily: "var(--font-mono)",
                     fontSize: 10, textTransform: "uppercase",
                     letterSpacing: "0.17em", color: "hsl(35 12% 52%)",
-                    width: "clamp(200px, 26vw, 340px)",
+                    width: "var(--hero-portrait-w)",
                   }}
                 >
                   <span>Nofar Levi Walastal</span>
@@ -578,10 +600,10 @@ function Index() {
 
                 <div style={{ display: "flex", alignItems: "baseline", gap: 36 }}>
                   {[
-                    { num: "96",  cap: isHe ? 'ציון מועצת רוה"ח' : "CPA Council Score" },
-                    { num: "15+", cap: isHe ? "שנות ניסיון"      : "Years Experience" },
-                  ].map(({ num, cap }) => (
-                    <div key={num}>
+                    { to: 96,  suffix: "",  cap: isHe ? 'ציון מועצת רוה"ח' : "CPA Council Score" },
+                    { to: 15,  suffix: "+", cap: isHe ? "שנות ניסיון"      : "Years Experience" },
+                  ].map(({ to, suffix, cap }) => (
+                    <div key={to}>
                       <span
                         style={{
                           fontFamily: "var(--font-display)", fontWeight: 800,
@@ -591,7 +613,7 @@ function Index() {
                           display: "block",
                         }}
                       >
-                        {num}
+                        <CountUp to={to} />{suffix}
                       </span>
                       <span
                         style={{

@@ -44,6 +44,11 @@
   --border-dim:   hsl(34 12% 11%);
   --bg-card:      hsl(24 16% 9%);
   --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Hero parallax: extra scroll travel below the pinned viewport so the
+     dolly-zoom + fade animate smoothly on desktop. */
+  --hero-space-h:   150vh;
+  --hero-portrait-w: clamp(200px, 26vw, 340px);
 }
 
 /* ── Hero atmospheric background layer ───────── */
@@ -161,6 +166,13 @@
 /* ── Mobile responsive ────────────────────────── */
 @media (max-width: 639px) {
   .hud-symbols-layer { display: none; }
+  :root {
+    /* Single-viewport static hero on mobile: no scroll travel means the
+       parallax guard keeps the hero text permanently visible. Narrower
+       portrait lets the portrait + text sit side by side without crowding. */
+    --hero-space-h:   100vh;
+    --hero-portrait-w: clamp(132px, 38vw, 200px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
