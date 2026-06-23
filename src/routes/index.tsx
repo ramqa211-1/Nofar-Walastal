@@ -864,7 +864,7 @@ function Index() {
             alignItems: "flex-end", gap: 40, flexWrap: "wrap",
           }}
         >
-          <div>
+          <div style={{ textAlign: "right" }}>
             <div
               style={{
                 fontFamily: "var(--font-mono)", fontSize: 13,
@@ -886,13 +886,12 @@ function Index() {
             <a
               className="footer-link"
               href="tel:0546733781"
-              dir="ltr"
               style={{
                 display: "block", fontFamily: "var(--font-mono)", fontSize: 17,
                 color: "hsl(38 22% 87%)", textDecoration: "none", marginBottom: 10,
               }}
             >
-              054-6733781
+              <span dir="ltr">054-6733781</span>
             </a>
             <a
               className="footer-link"
