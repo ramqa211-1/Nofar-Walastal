@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import portraitUrl from "../../images/nofar.png";
+import portraitUrl from "../../images/nofar suite 2.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -150,7 +150,7 @@ const hudSymbols: Array<{
   pos: React.CSSProperties;
 }> = [
   { glyph: "₪",   cap: ["מטבע ישראלי", "יחס שקל"],      size: 100, pos: { top: "14%", right: "7%" } },
-  { glyph: "%",   cap: ["מועצת רואי", "החשבון"],         size: 112, pos: { bottom: "20%", left: "8%" } },
+  { glyph: "%",   cap: ["לשכת רואי", "חשבון"],           size: 112, pos: { bottom: "20%", left: "8%" } },
   { glyph: "96",  cap: ["קול המס", "בחינה לאומית"],      size: 72,  pos: { top: "18%", left: "9%" } },
   { glyph: "15+", cap: ["שנות ניסיון", "ניהולי"],        size: 64,  pos: { bottom: "17%", right: "8%" } },
 ];
@@ -734,7 +734,7 @@ function Index() {
                 }}
               >
                 {isHe ? (
-                  <>ציון בבחינת<br />מועצת רואי החשבון</>
+                  <>ציון בבחינת<br />לשכת רואי חשבון</>
                 ) : (
                   <>CPA Council<br />Exam Score</>
                 )}
@@ -798,7 +798,7 @@ function Index() {
 
             <p style={{ ...BODY, marginBottom: 22 }}>
               {isHe
-                ? "ניהול שוטף של מערך תפעולי הכולל ניהול כוח אדם, מלאי, תקציבים, דוחות כספיים ובקרות. הובלת התחנה לתוצאות שיא תוך שמירה על סטנדרטים גבוהים של שירות ודיוק."
+                ? "בעלת ניסיון ניהולי ותפעולי עשיר בשטח. רקע מוכח בניהול מערכים מורכבים, הנעת עובדים, עבודה שוטפת מול ספקים וניהול מערכי נוכחות. בעלת ידע מעמיק ויסודי בדיני עבודה, המשלבת יכולת ארגונית גבוהה, יחסי אנוש מעולים וירידה לפרטים."
                 : "Full operational management including HR, inventory, budgets, financial reports, and controls. Led the station to record results while maintaining high service and accuracy standards."}
             </p>
 
